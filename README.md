@@ -1,5 +1,28 @@
-Yii 2 Advanced Application Template
+Sunny Yii2 (xiaoyaosun@qq.com)
 ===================================
+
+1) You can customize your configure on "common"
+2) You can request the api by this method: 
+
+```
+
+URL/<module>/web/index.php?r=<v1>/<controller>/<action>
+
+Origin Request:
+URL/api/web/index.php?r=v1/site/test
+
+After Rewrite Request:
+rewrite ^(.*)/api/web/v(.*)$ $1/api/web/index.php?r=v$2 last;
+URL/api/web/v1/site/test
+
+```
+
+3) Support to Redis connection
+4) Support to the Master/Slave for DB
+-------------------
+
+Yii 2 Advanced Application Template
+-------------------
 
 Yii 2 Advanced Application Template is a skeleton Yii 2 application best for
 developing complex Web applications with multiple tiers.
