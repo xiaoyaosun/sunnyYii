@@ -13,6 +13,8 @@ use Yii;
 // 引入Logic模型
 use api\modules\v1\logic\L_user;
 
+// 引入统计模块
+use api\components\WKStaclient;
 
 define(DEBUG_LOG, '/opt/logs/debug/SiteController-'.date('Y-m-d', time()).'.log');
 
@@ -26,6 +28,9 @@ class SiteController extends \yii\web\Controller
     public function actionTestquestion()
     {
 		
+        $module = str_replace("\\", '_', __CLASS__);
+        WKStaclient::tick($module, __FUNCTION__);
+		
 		$p['paper_id'] = 51;
 		$p['question_id'] = 1411;
 		$p['item_id'] = 5;
@@ -38,11 +43,17 @@ class SiteController extends \yii\web\Controller
 			$answer[] = $row->attributes;
 		}
 
+		WKStaclient::report($module, __FUNCTION__, 1, 0, 'ok');
+		
 		echo json_encode($answer);
     }
 
     public function actionTestdbconnect()
     {
+		
+        $module = str_replace("\\", '_', __CLASS__);
+        WKStaclient::tick($module, __FUNCTION__);
+		
 		$connection = new \yii\db\Connection([
 			 'dsn' => 'mysql:host=localhost;dbname=music',
 			 'username' => 'root',
@@ -50,6 +61,9 @@ class SiteController extends \yii\web\Controller
 		]);
 		
 		$connection->open();
+		
+		WKStaclient::report($module, __FUNCTION__, 1, 0, 'ok');
+		
 		var_dump($connection);
 	}
 }

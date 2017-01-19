@@ -2,7 +2,10 @@ Sunny Yii2 (xiaoyaosun@qq.com)
 ===================================
 
 1) You can customize your configure on "common"
+-------------------
+
 2) You can request the api by this method: 
+-------------------
 
 ```
 
@@ -18,6 +21,8 @@ URL/api/web/v1/site/test
 ```
 
 3) Support to Redis connection
+-------------------
+
 4) Support to the Master/Slave for DB
 -------------------
 

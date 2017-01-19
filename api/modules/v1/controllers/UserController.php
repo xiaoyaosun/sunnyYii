@@ -11,6 +11,9 @@ use api\components\Myfun;
 // 引入Logic模型
 use api\modules\v1\logic\L_user;
 
+// 引入统计模块
+use api\components\WKStaclient;
+
 define(DEBUG_LOG, '/opt/logs/debug/UserController-' . date('Y-m-d', time()) . '.log');
 
 class UserController extends \yii\web\Controller
@@ -30,6 +33,9 @@ class UserController extends \yii\web\Controller
     // 从用户中心获取用户信息
     public function actionLogin()
     {
+		
+        $module = str_replace("\\", '_', __CLASS__);
+        WKStaclient::tick($module, __FUNCTION__);
 		
         $ret = array();
         $ret['error_code'] = 0;
@@ -64,6 +70,8 @@ class UserController extends \yii\web\Controller
 			$ret['data'] = '';
 		}
 		
+		WKStaclient::report($module, __FUNCTION__, 1, 0, 'ok');
+		
 		// H5调用会有跨域问题，因此当H5调用传递callback参数时，另作处理
 		if (isset($_REQUEST['callback']) and !empty($_REQUEST['callback'])) {
 
@@ -81,6 +89,9 @@ class UserController extends \yii\web\Controller
     public function actionGetrandcode()
     {
 
+        $module = str_replace("\\", '_', __CLASS__);
+        WKStaclient::tick($module, __FUNCTION__);
+		
         // 用户获取验证码
         $ret = array();
         $ret['error_code'] = 0;
@@ -115,7 +126,16 @@ class UserController extends \yii\web\Controller
 			$ret['data'] = '';
 		}
 		
-        echo json_encode($ret);
+		WKStaclient::report($module, __FUNCTION__, 1, 0, 'ok');
+		
+		// H5调用会有跨域问题，因此当H5调用传递callback参数时，另作处理
+		if (isset($_REQUEST['callback']) and !empty($_REQUEST['callback'])) {
+
+			echo $_REQUEST['callback'].'('.json_encode($ret).')';
+		} else {
+			
+			echo json_encode($ret);
+		}
     }
 
     /*
@@ -124,6 +144,9 @@ class UserController extends \yii\web\Controller
     public function actionGetinfo()
     {
 
+        $module = str_replace("\\", '_', __CLASS__);
+        WKStaclient::tick($module, __FUNCTION__);
+		
         $ret = array();
         $ret['error_code'] = 0;
         $ret['error_msg'] = '';
@@ -158,6 +181,8 @@ class UserController extends \yii\web\Controller
 			$ret['data'] = '';
 		}
 		
+		WKStaclient::report($module, __FUNCTION__, 1, 0, 'ok');
+		
 		// H5调用会有跨域问题，因此当H5调用传递callback参数时，另作处理
 		if (isset($_REQUEST['callback']) and !empty($_REQUEST['callback'])) {
 
@@ -174,6 +199,9 @@ class UserController extends \yii\web\Controller
     public function actionChecktoken()
     {
 
+        $module = str_replace("\\", '_', __CLASS__);
+        WKStaclient::tick($module, __FUNCTION__);
+		
         $ret = array();
         $ret['error_code'] = 0;
         $ret['error_msg'] = '';
@@ -209,6 +237,8 @@ class UserController extends \yii\web\Controller
 			$ret['data'] = '';
 		}
 		
+		WKStaclient::report($module, __FUNCTION__, 1, 0, 'ok');
+		
 		// H5调用会有跨域问题，因此当H5调用传递callback参数时，另作处理
 		if (isset($_REQUEST['callback']) and !empty($_REQUEST['callback'])) {
 
@@ -225,6 +255,9 @@ class UserController extends \yii\web\Controller
     public function actionWechatlogin()
     {
 
+        $module = str_replace("\\", '_', __CLASS__);
+        WKStaclient::tick($module, __FUNCTION__);
+		
         $ret = array();
         $ret['error_code'] = 0;
         $ret['error_msg'] = '';
@@ -259,6 +292,8 @@ class UserController extends \yii\web\Controller
 			$ret['data'] = '';
 		}
 		
+		WKStaclient::report($module, __FUNCTION__, 1, 0, 'ok');
+		
 		// H5调用会有跨域问题，因此当H5调用传递callback参数时，另作处理
 		if (isset($_REQUEST['callback']) and !empty($_REQUEST['callback'])) {
 
@@ -270,11 +305,14 @@ class UserController extends \yii\web\Controller
     }
 	
     /*
-        获取当前用户信息
+        检查用户是否白名单中
     */
     public function actionCheckwhite()
     {
 
+        $module = str_replace("\\", '_', __CLASS__);
+        WKStaclient::tick($module, __FUNCTION__);
+		
         $ret = array();
         $ret['error_code'] = 0;
         $ret['error_msg'] = '';
@@ -310,6 +348,8 @@ class UserController extends \yii\web\Controller
 			$ret['data'] = '';
 		}
 		
+		WKStaclient::report($module, __FUNCTION__, 1, 0, 'ok');
+		
 		// H5调用会有跨域问题，因此当H5调用传递callback参数时，另作处理
 		if (isset($_REQUEST['callback']) and !empty($_REQUEST['callback'])) {
 
@@ -326,6 +366,9 @@ class UserController extends \yii\web\Controller
     public function actionUpdatewhiteuser()
     {
 
+        $module = str_replace("\\", '_', __CLASS__);
+        WKStaclient::tick($module, __FUNCTION__);
+		
         $ret = array();
         $ret['error_code'] = 0;
         $ret['error_msg'] = '';
@@ -360,6 +403,8 @@ class UserController extends \yii\web\Controller
 			$ret['error_msg'] = '服务器开小差';
 			$ret['data'] = '';
 		}
+		
+		WKStaclient::report($module, __FUNCTION__, 1, 0, 'ok');
 		
 		// H5调用会有跨域问题，因此当H5调用传递callback参数时，另作处理
 		if (isset($_REQUEST['callback']) and !empty($_REQUEST['callback'])) {

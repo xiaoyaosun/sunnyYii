@@ -8,6 +8,8 @@ use api\components\Myfun;
 // 引入Logic模型
 use api\modules\v1\logic\L_fenlei;
 
+// 引入统计模块
+use api\components\WKStaclient;
 
 define(DEBUG_LOG, '/opt/logs/debug/FenleiController-' . date('Y-m-d', time()) . '.log');
 
@@ -24,6 +26,9 @@ class FenleiController extends \yii\web\Controller
 	// 获取指定分类信息
     public function actionGetalllist()
     {
+		
+        $module = str_replace("\\", '_', __CLASS__);
+        WKStaclient::tick($module, __FUNCTION__);
 		
 		$ret = array();
 		$ret['error_code'] = 0;
@@ -58,6 +63,8 @@ class FenleiController extends \yii\web\Controller
 			$ret['error_msg'] = '服务器开小差';
 			$ret['data'] = '';
 		}
+		
+		WKStaclient::report($module, __FUNCTION__, 1, 0, 'ok');
 		
 		// H5调用会有跨域问题，因此当H5调用传递callback参数时，另作处理
 		if (isset($_REQUEST['callback']) and !empty($_REQUEST['callback'])) {

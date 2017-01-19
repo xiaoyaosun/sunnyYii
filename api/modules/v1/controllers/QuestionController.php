@@ -12,6 +12,9 @@ use api\components\Myfun;
 use api\modules\v1\logic\L_user;
 use api\modules\v1\logic\L_question;
 
+// 引入统计模块
+use api\components\WKStaclient;
+
 define(DEBUG_LOG, '/opt/logs/debug/QuestionController-'.date('Y-m-d', time()).'.log');
 
 class QuestionController extends \yii\web\Controller
@@ -23,7 +26,11 @@ class QuestionController extends \yii\web\Controller
 	// post表单会默认添加校验
 	public $enableCsrfValidation = false;
 
-    public function actionGetinfobyid(){
+    public function actionGetinfobyid()
+	{
+		
+        $module = str_replace("\\", '_', __CLASS__);
+        WKStaclient::tick($module, __FUNCTION__);
 		
 		$ret = array();
 		$ret['error_code'] = 0;
@@ -59,6 +66,8 @@ class QuestionController extends \yii\web\Controller
 			$ret['data'] = '';
 		}
 		
+		WKStaclient::report($module, __FUNCTION__, 1, 0, 'ok');
+		
 		// H5调用会有跨域问题，因此当H5调用传递callback参数时，另作处理
 		if (isset($_REQUEST['callback']) and !empty($_REQUEST['callback'])) {
 
@@ -69,7 +78,11 @@ class QuestionController extends \yii\web\Controller
 		}
     }
 	
-    public function actionGetfreeinfo(){
+    public function actionGetfreeinfo()
+	{
+		
+        $module = str_replace("\\", '_', __CLASS__);
+        WKStaclient::tick($module, __FUNCTION__);
 		
 		$ret = array();
 		$ret['error_code'] = 0;
@@ -105,6 +118,8 @@ class QuestionController extends \yii\web\Controller
 			$ret['data'] = '';
 		}
 		
+		WKStaclient::report($module, __FUNCTION__, 1, 0, 'ok');
+		
 		// H5调用会有跨域问题，因此当H5调用传递callback参数时，另作处理
 		if (isset($_REQUEST['callback']) and !empty($_REQUEST['callback'])) {
 
@@ -115,7 +130,11 @@ class QuestionController extends \yii\web\Controller
 		}
     }
 	
-    public function actionGetids(){
+    public function actionGetids()
+	{
+	
+        $module = str_replace("\\", '_', __CLASS__);
+        WKStaclient::tick($module, __FUNCTION__);
 		
 		$ret = array();
 		$ret['error_code'] = 0;
@@ -152,6 +171,8 @@ class QuestionController extends \yii\web\Controller
 			$ret['data'] = '';
 		}
 		
+		WKStaclient::report($module, __FUNCTION__, 1, 0, 'ok');
+		
 		// H5调用会有跨域问题，因此当H5调用传递callback参数时，另作处理
 		if (isset($_REQUEST['callback']) and !empty($_REQUEST['callback'])) {
 
@@ -163,7 +184,11 @@ class QuestionController extends \yii\web\Controller
     }
 	
 	// 提交答案
-    public function actionSubmit(){
+    public function actionSubmit()
+	{
+	
+        $module = str_replace("\\", '_', __CLASS__);
+        WKStaclient::tick($module, __FUNCTION__);
 		
 		$ret = array();
 		$ret['error_code'] = 0;
@@ -198,6 +223,8 @@ class QuestionController extends \yii\web\Controller
 			$ret['error_msg'] = '服务器开小差';
 			$ret['data'] = '';
 		}
+		
+		WKStaclient::report($module, __FUNCTION__, 1, 0, 'ok');
 		
 		// H5调用会有跨域问题，因此当H5调用传递callback参数时，另作处理
 		if (isset($_REQUEST['callback']) and !empty($_REQUEST['callback'])) {
